@@ -1,0 +1,12 @@
+#pragma once
+#include "opendspc_export.h"
+#include "opendspc_types.h"
+// dsp
+#include "opendspc_fft.h"
+#include "opendspc_lpc.h"
+#include "opendspc_polyfit.h"
+#include "opendspc_resample.h"
+#include "opendspc_stft.h"
+// feature
+#include "opendspc_pitch.h"
+#include "opendspc_mel.h"

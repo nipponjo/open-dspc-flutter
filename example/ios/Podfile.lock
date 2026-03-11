@@ -1,0 +1,41 @@
+PODS:
+  - audioplayers_darwin (0.0.1):
+    - Flutter
+    - FlutterMacOS
+  - Flutter (1.0.0)
+  - open_filex (0.0.2):
+    - Flutter
+  - record_ios (1.2.0):
+    - Flutter
+  - share_plus (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - audioplayers_darwin (from `.symlinks/plugins/audioplayers_darwin/darwin`)
+  - Flutter (from `Flutter`)
+  - open_filex (from `.symlinks/plugins/open_filex/ios`)
+  - record_ios (from `.symlinks/plugins/record_ios/ios`)
+  - share_plus (from `.symlinks/plugins/share_plus/ios`)
+
+EXTERNAL SOURCES:
+  audioplayers_darwin:
+    :path: ".symlinks/plugins/audioplayers_darwin/darwin"
+  Flutter:
+    :path: Flutter
+  open_filex:
+    :path: ".symlinks/plugins/open_filex/ios"
+  record_ios:
+    :path: ".symlinks/plugins/record_ios/ios"
+  share_plus:
+    :path: ".symlinks/plugins/share_plus/ios"
+
+SPEC CHECKSUMS:
+  audioplayers_darwin: f15e209a3e856d1a7edcf98dc029f484fead2242
+  Flutter: cabc95a1d2626b1b06e7179b784ebcf0c0cde467
+  open_filex: 6e26e659846ec990262224a12ef1c528bb4edbe4
+  record_ios: 26294aaa39e4bb7665b0fef78bdc23d723b432f2
+  share_plus: 8b6f8b3447e494cca5317c8c3073de39b3600d1f
+
+PODFILE CHECKSUM: 3c63482e143d1b91d2d2560aee9fb04ecc74ac7e
+
+COCOAPODS: 1.16.2

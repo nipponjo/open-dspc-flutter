@@ -1,0 +1,20 @@
+name: opendspc_benchmarks
+description: Benchmarks for opendspc
+
+publish_to: 'none'
+
+version: 1.0.0
+
+environment:
+  sdk: ">=2.12.0 <4.0.0"
+
+dependencies:
+  fftea: ^1.5.0+1
+  open_dspc:   
+    path: ../
+  # fft: ^0.3.0
+  # scidart: ^0.0.2-dev.9
+  # smart_signal_processing: ^2.1.1
+
+dev_dependencies:
+  lints: ^1.0.0
