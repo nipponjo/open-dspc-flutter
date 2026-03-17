@@ -21,14 +21,21 @@ The package provides efficient implementations of common DSP algorithms while of
 import 'package:open_dspc/open_dspc.dart';
 ```
 
-**Signals**
+`open_dspc` provides both:
+- `FFTStatic`, `Conv.direct`, `Resample.process`, ... for one-shot functional calls
+- `RfftPlan`, `FftConvolver`, `Resampler`, ... for reusable native contexts with lower overhead
+
+For repeated processing of many equally sized blocks, the reusable plan/context APIs
+are typically faster because native setup and scratch buffers can be reused.
+
+### ∿ Signals
 
 ```dart
 final Float32List signal = SignalGenerator.sine(n: 1024, freqHz: 440.0, sampleRate: 16000.0);
 
 ```
 
-**FFT**
+### FFT
 
 ```dart
 
@@ -41,7 +48,11 @@ final Float32List mag = rfftPlan.executeMag(x);
 
 ```
 
-**Convolution**
+Notes:
+- `FFTStatic` is convenient for one-off transforms.
+- `RfftPlan` is preferable when the same `n` is used repeatedly.
+
+### ∗ Convolution
 
 ```dart
 final x = Float32List.fromList([1, 1, 1, 1, 1]);
@@ -50,12 +61,38 @@ final xyFull = Conv.direct(x, y, outMode: CorrOutMode.full, simd: true);
 // [1.0, 2.0, 3.0, 4.0, 5.0, 4.0, 3.0, 2.0, 1.0]
 ```
 
-**Resampling**
+Notes:
+- `ConvMode.convolution` and `ConvMode.xcorr` are both supported.
+- `CorrOutMode.full`, `same`, and `valid` follow SciPy-style output conventions.
+- `simd: true` enables the explicit SIMD path when supported by the target architecture.
+
+### ↕ Resampling
 
 ```dart
 final x = SignalGenerator.sine(n: 16000 * 8, freqHz: 440.0, sampleRate: 16000.0);
 final y = Resample.process(x, origFreq: 16000, newFreq: 8000);
 ```
+
+Notes:
+- `Resample.process(...)` is the simplest entry point for single blocks.
+- `Resampler(...)` is intended for repeated streaming or batch use with the same settings.
+
+### ⚙ Example: reusable native plan
+
+```dart
+final plan = RfftPlan(1024);
+
+final x1 = SignalGenerator.sine(n: 1024, freqHz: 440.0, sampleRate: 16000.0);
+final x2 = SignalGenerator.sine(n: 1024, freqHz: 880.0, sampleRate: 16000.0);
+
+final y1 = plan.executeMag(x1);
+final y2 = plan.executeMag(x2);
+
+plan.close();
+```
+
+This pattern is generally the best choice for benchmarking, real-time processing,
+or any workload where the same transform/configuration is reused many times.
 
 
 ## FFT Benchmark Summary
@@ -100,4 +137,23 @@ For full benchmark scripts and raw results, see [`bench/`](bench/).
   - **transform classes** (reusable contexts for performance)
 
 
+
+## License
+
+`open_dspc` is licensed under the [MIT License](LICENSE).
+
+This repository also bundles third-party FFT implementations under their own
+licenses. Which of these are included in a given native build depends on the
+selected FFT backend. The default build uses `pffft` together with
+`pocketfft-c` in the hybrid backend.
+
+Bundled third-party licenses:
+
+- `pffft`:
+  BSD-style 3-clause license ([src/third_party/pffft/LICENSE.txt](src/third_party/pffft/LICENSE.txt))
+- `pocketfft-c`:
+  BSD-3-Clause ([src/third_party/pocketfft-c/LICENSE.md](src/third_party/pocketfft-c/LICENSE.md))
+- `kissfft`:
+  BSD-3-Clause ([src/third_party/kissfft/COPYING](src/third_party/kissfft/COPYING),
+  [src/third_party/kissfft/LICENSES/BSD-3-Clause](src/third_party/kissfft/LICENSES/BSD-3-Clause))
 
