@@ -1,5 +1,5 @@
 name: open_dspc
-description: ⚡ Dart/Flutter DSP package with a lightweight native C backend
+description: Dart/Flutter DSP package with a lightweight native C backend
 version: 0.0.1
 homepage: https://github.com/nipponjo/open-dspc-flutter
 
