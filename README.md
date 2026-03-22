@@ -1,5 +1,7 @@
 # open_dspc
 
+[pub.dev/open_dspc](https://pub.dev/packages/open_dspc)
+
 `open_dspc` is a Dart/Flutter package for **digital signal processing (DSP)** built on top of a lightweight **C library** accessed through `dart:ffi`.
 
 The package provides efficient implementations of common DSP algorithms while offering a convenient Dart API suitable for Flutter apps, scientific tooling, and real-time audio processing.
