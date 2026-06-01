@@ -56,11 +56,13 @@ void main() {
 
     final scalarUs = swScalar.elapsedMicroseconds / iters;
     final simdUs = swSimd.elapsedMicroseconds / iters;
-    print(
+    printOnFailure(
       'autocorr_direct(full, n=${x.length}, iters=$iters): '
       'scalar=${scalarUs.toStringAsFixed(1)} us, '
       'simd=${simdUs.toStringAsFixed(1)} us, '
       'speedup=${(scalarUs / simdUs).toStringAsFixed(3)}x',
     );
+    expect(scalarUs, greaterThan(0));
+    expect(simdUs, greaterThan(0));
   });
 }

@@ -34,10 +34,11 @@ void main() {
     sw.stop();
 
     final usPerIter = sw.elapsedMicroseconds / nIter;
-    print(r);
-    print(y.sublist(0, 10));
-    print(yhat!.sublist(0, 10));
-
-    print('lfilter: ${usPerIter.toStringAsFixed(2)} µs/iter (n=$n)');
+    printOnFailure('polyfit: ${usPerIter.toStringAsFixed(2)} µs/iter (n=$n)');
+    expect(r, isNotNull);
+    expect(yhat, isNotNull);
+    expect(r!.length, 9);
+    expect(yhat!.length, n);
+    expect(usPerIter, greaterThan(0));
   });
 }

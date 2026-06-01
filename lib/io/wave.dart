@@ -165,9 +165,7 @@ class WavReader {
       }
 
       // Skip: validBitsPerSample (2), channelMask (4)
-      final validBitsPerSample = getU16(p);
       p += 2;
-      final channelMask = getU32(p);
       p += 4;
 
       // SubFormat GUID (16 bytes). We only need to identify PCM vs IEEE float.
@@ -213,20 +211,20 @@ class WavReader {
         );
       }
 
-      // Some files use validBitsPerSample < bitsPerSample; keep the container bits
-      // for decoding, but you can inspect validBitsPerSample if you want.
-      // (We ignore channelMask here; channels count already tells us interleaving.)
-      // ignore: unused_local_variable
-      final _ = channelMask;
-      // ignore: unused_local_variable
-      final __ = validBitsPerSample;
+      // Some files use validBitsPerSample < bitsPerSample; keep the container
+      // bits for decoding. The channel mask is ignored because channel count
+      // already tells us interleaving.
     }
 
-    if (nChannels <= 0) throw FormatException('Invalid channels: $nChannels');
-    if (nBlockAlign <= 0)
+    if (nChannels <= 0) {
+      throw FormatException('Invalid channels: $nChannels');
+    }
+    if (nBlockAlign <= 0) {
       throw FormatException('Invalid blockAlign: $nBlockAlign');
-    if (wBitsPerSample <= 0)
+    }
+    if (wBitsPerSample <= 0) {
       throw FormatException('Invalid bitsPerSample: $wBitsPerSample');
+    }
 
     // ---- Decode data ----
     final dataBd = bd; // same buffer
@@ -509,11 +507,12 @@ class WavWriter {
     final bytes = out.toBytes();
     // Sanity check: total size might be +1 if padded
     if (bytes.length != totalSize && bytes.length != totalSize + 1) {
-      // Don’t throw; just keep it as debug help.
-      // ignore: avoid_print
-      print(
-        'WavWriter: size mismatch expected $totalSize(+pad) got ${bytes.length}',
-      );
+      assert(() {
+        stderr.writeln(
+          'WavWriter: size mismatch expected $totalSize(+pad) got ${bytes.length}',
+        );
+        return true;
+      }());
     }
     return bytes;
   }

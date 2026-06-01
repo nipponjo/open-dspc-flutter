@@ -305,12 +305,12 @@ class FftConvolver extends NativeHandle<_FftConvolverResource> {
   final int bins;
 
   FftConvolver._(
-    _FftConvolverResource res, {
+    super.res, {
     required this.xMax,
     required this.hMax,
     required this.nfft,
     required this.bins,
-  }) : super(res);
+  });
 
   /// Creates a reusable convolver with maximum input lengths [xMax] and [hMax].
   ///

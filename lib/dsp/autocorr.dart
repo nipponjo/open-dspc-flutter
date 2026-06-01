@@ -65,7 +65,10 @@ class Autocorr extends NativeHandle<_AutocorrRes> {
 
   double pitch(
     Float32List input, {
-    double sample_rate = 16000,
+    double sampleRate = 16000,
+    @Deprecated('Use sampleRate instead.')
+    // ignore: non_constant_identifier_names
+    double? sample_rate,
     double fmin = 60,
     double fmax = 600,
   }) {
@@ -81,7 +84,7 @@ class Autocorr extends NativeHandle<_AutocorrRes> {
       inputLen,
       r.xcorr,
       1,
-      sample_rate,
+      sample_rate ?? sampleRate,
       fmin,
       fmax,
     );

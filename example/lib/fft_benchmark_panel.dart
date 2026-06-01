@@ -109,7 +109,9 @@ class _FftBenchmarkPanelState extends State<FftBenchmarkPanel> {
                 title: const Text('Share / Send'),
                 onTap: () async {
                   Navigator.of(context).pop();
-                  await Share.shareXFiles([XFile(file.path)]);
+                  await SharePlus.instance.share(
+                    ShareParams(files: [XFile(file.path)]),
+                  );
                 },
               ),
             ],

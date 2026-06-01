@@ -55,6 +55,6 @@ void main() {
     final x = SignalGenerator.sine(n: 100, freqHz: 2 * 440, sampleRate: 16000);
 
     final result = find_peaks(x, prominence: 0.8);
-    print(result.peaks);
+    expect(result.peaks, isNotEmpty);
   });
 }

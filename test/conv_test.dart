@@ -14,9 +14,9 @@ void main() {
     final xySame = Conv.direct(x, y, outMode: CorrOutMode.same);
     final xyValid = Conv.direct(x, y, outMode: CorrOutMode.valid);
 
-    print("Full: $xyFull");
-    print("Same: $xySame");
-    print("Valid: $xyValid");
+    expect(xyFull, closeToList([1, 2, 3, 4, 5, 4, 3, 2, 1], 1e-6));
+    expect(xySame, closeToList([3, 4, 5, 4, 3], 1e-6));
+    expect(xyValid, closeToList([5], 1e-6));
   });
 
   test('Conv test: direct and FFT agree', () {
@@ -29,8 +29,6 @@ void main() {
     final xyConv = Conv.direct(x, y, mode: ConvMode.xcorr);
     final xyFftConv = fftconv.process(x, y, mode: ConvMode.xcorr);
 
-    print(xyConv);
-    print(xyFftConv);
     expect(xyConv, closeToList(xyFftConv, 1e-6));
     fftconv.close();
   });
@@ -83,12 +81,14 @@ void main() {
 
     final scalarUs = swScalar.elapsedMicroseconds / iters;
     final simdUs = swSimd.elapsedMicroseconds / iters;
-    print(
+    printOnFailure(
       'conv_direct(full, nx=${x.length}, nh=${h.length}, iters=$iters): '
       'scalar=${scalarUs.toStringAsFixed(1)} us, '
       'simd=${simdUs.toStringAsFixed(1)} us, '
       'speedup=${(scalarUs / simdUs).toStringAsFixed(3)}x',
     );
+    expect(scalarUs, greaterThan(0));
+    expect(simdUs, greaterThan(0));
   });
 
   test('correlationLags matches scipy conventions', () {

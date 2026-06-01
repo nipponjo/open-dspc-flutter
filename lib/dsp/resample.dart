@@ -66,7 +66,7 @@ class Resample {
       beta ?? 0,
     );
     if (ctx == ffi.nullptr) {
-      throw StateError("Failed to create resampling context");
+      throw StateError('Failed to create resampling context');
     }
 
     ffi.Pointer<ffi.Float> inPtr = ffi.nullptr;
@@ -158,14 +158,14 @@ class Resampler extends NativeHandle<_ResamplerResource> {
 
   /// Internal constructor used by [Resampler] to wrap an initialized native context.
   Resampler._(
-    _ResamplerResource res, {
+    super.res, {
     required this.origFreq,
     required this.newFreq,
     required this.lowpassFilterWidth,
     required this.rolloff,
     required this.method,
     required this.beta,
-  }) : super(res);
+  });
 
   /// Creates and owns a reusable resampling context for repeated calls.
   ///

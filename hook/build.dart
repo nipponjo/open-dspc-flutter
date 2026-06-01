@@ -26,10 +26,11 @@ void main(List<String> args) async {
   // Enable hierarchical logging
   Logger.root.level = Level.ALL;
   Logger.root.onRecord.listen((record) {
-    print('${record.level.name}: ${record.message}');
-    if (record.error != null) print(record.error);
-    if (record.stackTrace != null) print(record.stackTrace);
+    stderr.writeln('${record.level.name}: ${record.message}');
+    if (record.error != null) stderr.writeln(record.error);
+    if (record.stackTrace != null) stderr.writeln(record.stackTrace);
   });
+  final logger = Logger('opendspc');
 
   await build(args, (input, output) async {
     if (!input.config.buildCodeAssets) return;
@@ -73,7 +74,7 @@ void main(List<String> args) async {
     final defines = <String, String?>{'OPENDSPC_BUILD': '1'};
     final fftBackend = (Platform.environment['OPENDSPC_FFT_BACKEND'] ?? 'auto')
         .toLowerCase();
-    print('using FFT backend: $fftBackend');
+    logger.info('using FFT backend: $fftBackend');
 
     // Select one backend implementation because each backend exports the same symbols.
     if (fftBackend == 'auto') {
@@ -173,6 +174,6 @@ void main(List<String> args) async {
       libraries: libraries,
     );
 
-    await builder.run(input: input, output: output, logger: Logger('opendspc'));
+    await builder.run(input: input, output: output, logger: logger);
   });
 }
