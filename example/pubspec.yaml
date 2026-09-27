@@ -19,7 +19,7 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: ^3.10.7
+  sdk: ^3.12.0
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -43,11 +43,11 @@ dependencies:
   # Use with the CupertinoIcons class for iOS style icons.
   cupertino_icons: ^1.0.8
   fftea: ^1.5.0+1
-  record: ^7.0.0
-  path_provider: ^2.1.5
-  share_plus: ^13.1.0
+  record: ^7.1.1
+  path_provider: ^2.1.6
+  share_plus: ^13.3.0
   open_filex: ^4.7.0
-  audioplayers: ^6.1.0
+  audioplayers: ^6.8.1
 
 
 dev_dependencies:

@@ -1,3 +1,7 @@
+## 0.1.0
+
+- Update dependencies for the package, example, and benchmarks.
+
 ## 0.0.3
 
 - Resolve Flutter analyzer warnings across package, example, hooks, and tests.
